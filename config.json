@@ -9,13 +9,13 @@
                "enabled": "1"
            },
           "StreamingWatch":{
-              "url": "https://www.streamingwatch.org",
+              "url": "https://www.justwatch.com/it",
               "SW_PROXY": "0",
               "SW_ForwardProxy": "0",
               "enabled":"1"
           },
           "CB01":{
-              "url": "https://cb01net.cam",
+              "url": "https://cb01net.baby/",
               "CB_PROXY":"0",
               "CB_ForwardProxy":"0",
               "MX_ForwardProxy":"0",
