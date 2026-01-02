@@ -17,7 +17,7 @@
           "CB01":{
               "url": "https://cb01net.baby",
               "CB_PROXY":"0",
-              "CB_ForwardProxy":"0",
+              "CB_ForwardProxy":"1",
               "MX_ForwardProxy":"0",
               "MX_PROXY":"0",
               "enabled":"1"
@@ -72,6 +72,6 @@
        "Name": "MammaMia",
        "Icon": "🍕",
        "level": "info",
-       "Global_Proxy": "1"
+       "Global_Proxy": "0"
        }
   }
