@@ -2,9 +2,9 @@
     "Siti": {
            "StreamingCommunity": {
                "url": "https://vixsrc.to",
-               "SC_ForwardProxy": "1",
+               "SC_ForwardProxy": "0",
                "SC_PROXY": "1",
-               "VX_ForwardProxy": "1",
+               "VX_ForwardProxy": "0",
                "VX_PROXY": "1",
                "enabled": "1"
            },
@@ -61,7 +61,7 @@
           "Realtime": {
             "url": "https://realtime.it",
             "enabled": "1",
-            "RT_ForwardProxy": "1",
+            "RT_ForwardProxy": "0",
             "RT_PROXY": "1"
           }
    },
