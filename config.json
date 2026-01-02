@@ -55,14 +55,14 @@
           "AnimeWorld":{
             "url": "https://www.animeworld.ac",
             "enabled":"1",
-            "AW_ForwardProxy":"0",
-            "AW_PROXY":"0"
+            "AW_ForwardProxy":"1",
+            "AW_PROXY":"1"
           },
           "Realtime": {
             "url": "https://realtime.it",
             "enabled": "1",
-            "RT_ForwardProxy": "0",
-            "RT_PROXY": "0"
+            "RT_ForwardProxy": "1",
+            "RT_PROXY": "1"
           }
    },
    "General":{
