@@ -19,5 +19,7 @@ jobs:
         run: |
           agent-browser open ${{ secrets.HUGGING_FACE_SPACE_URL }}
           agent-browser wait 10000
+          agent-browser frame 1
+          agent-browser find text "running" text 
           agent-browser screenshot page.png
           agent-browser close
