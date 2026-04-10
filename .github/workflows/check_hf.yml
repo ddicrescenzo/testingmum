@@ -1,6 +1,7 @@
 on:
   schedule:
     - cron: "58 21 * * *"
+  workflow_dispatch:  # Add this to enable manual runs
 
 jobs:
   access-hugging-face-n8n:
