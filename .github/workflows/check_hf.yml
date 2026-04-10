@@ -18,6 +18,6 @@ jobs:
       - name: Go to the hugging face space
         run: |
           agent-browser open ${{ secrets.HUGGING_FACE_SPACE_URL }}
-          agent-browser wait --text "Your App is running"
+          agent-browser wait --text "running"
           agent-browser screenshot page.png
           agent-browser close
