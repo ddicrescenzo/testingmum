@@ -1,0 +1,22 @@
+on:
+  schedule:
+    - cron: "0 0 * * *"
+
+jobs:
+  access-hugging-face-n8n:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Install agent-browser
+        run: npm install -g agent-browser
+
+      - name: Install Playwright browsers
+        run: agent-browser install --with-deps
+
+      - name: Go to the hugging face space
+        run: |
+          agent-browser open ${{ secrets.HUGGING_FACE_SPACE_URL }}
+          agent-browser wait --text "Sign in"
+          agent-browser screenshot page.png
+          agent-browser close
