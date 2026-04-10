@@ -1,6 +1,6 @@
 on:
   schedule:
-    - cron: "0 0 * * *"
+    - cron: "53 23 * * *"
 
 jobs:
   access-hugging-face-n8n:
