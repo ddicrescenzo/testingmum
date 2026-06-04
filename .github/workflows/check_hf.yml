@@ -1,0 +1,25 @@
+on:
+  schedule:
+    - cron: "58 21 * * *"
+  workflow_dispatch:  # Add this to enable manual runs
+
+jobs:
+  access-hugging-face:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Install agent-browser
+        run: npm install -g agent-browser
+
+      - name: Install Playwright browsers
+        run: agent-browser install --with-deps
+
+      - name: Go to the hugging face space
+        run: |
+          agent-browser open ${{ secrets.HUGGING_FACE_SPACE_URL }}
+          agent-browser wait 10000
+          agent-browser snapshot
+          agent-browser click @e13
+          agent-browser screenshot page.png
+          agent-browser close
