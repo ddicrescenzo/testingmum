@@ -38,26 +38,14 @@ else:
 VD_DOMAIN = config.VD_DOMAIN
 
 headers = {
-    'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64; rv:150.0) Gecko/20100101 Firefox/150.0',
+    'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64; rv:155.0) Gecko/20100101 Firefox/155.0',
     'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
-    'Accept-Language': 'en-US,en;q=0.9',
-    # 'Accept-Encoding': 'gzip, deflate, br, zstd',
-    'Sec-GPC': '1',
-    'Alt-Used': 'v.vidxgo.co',
-    'Connection': 'keep-alive',
-    'Upgrade-Insecure-Requests': '1',
     'Sec-Fetch-Dest': 'iframe',
-    'Sec-Fetch-Mode': 'navigate',
-    'Sec-Fetch-Site': 'none',
-    'DNT': '1',
-    'Referer': 'https://altadefinizione.you/',
-    'Sec-Fetch-Storage-Access': 'none',
-    '-': '-',
-    'Priority': 'u=0, i',
+    'Referer': 'https://altadefinizione.fast'
 }
 
 headers2 = {
-    'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64; rv:150.0) Gecko/20100101 Firefox/150.0',
+    'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64; rv:155.0) Gecko/20100101 Firefox/155.0',
     'Accept': '*/*',
     'Accept-Language': 'en-US,en;q=0.9',
     'Referer': 'https://v.vidxgo.co/tt34437972',
@@ -72,16 +60,20 @@ headers2 = {
 async def vidxgo_refresh(link,id):
     async with AsyncSession() as client:
         headers['Referer'] = f'{VD_DOMAIN}/t/{id}'
-        response = await client.get(ForwardProxy + f'{VD_DOMAIN}/t/{id}', allow_redirects=True, headers = headers2, proxies = proxies)
+        response = await client.get(ForwardProxy + f'{VD_DOMAIN}/t/{id}', allow_redirects=True, headers = headers2, proxies = proxies,impersonate='chrome')
         return response.json()['url'].replace('\\','')
 
 async def vidxgo(link,client,streams,instance_url):
     #headers = random_headers.generate()
-    response = await client.get(ForwardProxy + link, allow_redirects=True, headers = headers, proxies = proxies)
+    response = await client.get(ForwardProxy + link, allow_redirects=True, headers = headers, proxies = proxies,impersonate='chrome')
+    if response.status_code == 403:
+        response = await client.get(headers['Referer'])
+        headers['Referer'] = response.url
+        response = await client.get(ForwardProxy + link, allow_redirects=True, headers = headers, proxies = proxies,impersonate='chrome')
     soup = BeautifulSoup(response.text,'lxml',parse_only=SoupStrainer('script'))
     scripts = soup.find_all('script')
-    text = scripts[6]
-    match = re.search(r"var .+'(.*)',d=atob\('(.*)'",text.text)
+    text = [item for item in scripts if len(item.text) > 3000]
+    match = re.search(r"var .+'(.*)',d=atob\('(.*)'",text[0].text)
     if match:
         key = match.group(1)
         base64_text = match.group(2)
@@ -99,6 +91,10 @@ async def vidxgo(link,client,streams,instance_url):
             if submatch and suburlmatch:
                 subtitles = json.loads(submatch.group(1))
                 for item in subtitles: 
+                    if item['forced'] == True:
+                        item['id'] = item['lang'] + '-forced'
+                    else:
+                        item['id'] = item['lang']
                     del item['forced']
                     del item['file']
                     item['url'] = suburlmatch.group(1).replace('\\','') + item['url']
@@ -111,7 +107,7 @@ async def vidxgo(link,client,streams,instance_url):
 async def test_vidxgo():
     from curl_cffi.requests import AsyncSession
     async with AsyncSession() as client:
-        results = await vidxgo("https://v.vidxgo.co/tt1190634/1/1",client,{'streams': []},"localhost")
+        results = await vidxgo("https://v.vidxgo.co/tt0816692",client,{'streams': []},"localhost")
         print(results)
 if __name__ == "__main__":
     import asyncio
